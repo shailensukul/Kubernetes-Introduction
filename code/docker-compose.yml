@@ -1,0 +1,85 @@
+version: '3'
+
+services:
+  mongodb:
+    container_name: "mongodb"
+    image: mongo:latest
+    command:
+     - --smallfiles
+    hostname: mongodb
+    environment:
+ #     - AUTH=false
+      - MONGO_INITDB_ROOT_USERNAME=devadmin
+      - MONGO_INITDB_ROOT_PASSWORD=devadmin
+      - MONGO_INITDB_DATABASE=admin
+      - MONGODB_APPLICATION_DATABASE=sample
+      - MONGODB_APPLICATION_USER=appuser
+      - MONGODB_APPLICATION_PASS=appuser
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - hellowworlddata:/data/db  
+    ports:
+      - '27017:27017'
+    networks:
+      - helloworld_net
+    restart: always
+    # no --auth is needed here as presence of username and password add this option automatically
+    command: mongod 
+
+  helloworldapi:
+    tty: true
+    stdin_open: true
+    container_name: helloworldapi
+    hostname: helloworldapi
+    image: helloworldapi
+    depends_on:
+      - 'mongodb'
+    build:
+      context: .
+      dockerfile: helloworldapi/Dockerfile
+    ports:
+      - '8082:80'
+    networks:
+      - helloworld_net
+   
+  helloworldspa:
+    tty: true
+    stdin_open: true
+    container_name: helloworldspa
+    image: helloworldspa
+    build:
+      context: .
+      dockerfile: helloworldspa/Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - '80:80'
+    networks:
+      - helloworld_net
+     ## set your startup file here
+    command: [nginx-debug, '-g', 'daemon off;']
+    
+  # helloworldelements:
+  #   tty: true
+  #   stdin_open: true
+  #   container_name: helloworldelements
+  #   image: helloworldelements
+  #   build:
+  #     context: .
+  #     dockerfile: helloworldelements/Dockerfile
+  #   environment:
+  #     NODE_ENV: production
+  #   ports:
+  #     - '81:81'
+  #   networks:
+  #     - helloworld_net
+  #    ## set your startup file here
+  #   command: [nginx-debug, '-g', 'daemon off;']
+networks:
+  helloworld_net:
+    driver: bridge
+    ##driver: overlay
+
+volumes:
+  hellowworlddata: 

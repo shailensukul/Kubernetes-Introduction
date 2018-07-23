@@ -1,0 +1,24 @@
+<h2>Helloworld page</h2>
+<div>
+  <div>
+    <button (click)='getMessages()'>Get messages</button>
+  </div>
+  <div>
+    <div *ngFor="let message of messages | async" style="text-align:justify">
+      <button (click)='deleteMessage(message.id)'>Delete</button>
+      Id: {{message.id}} Name: {{message.name}} Message: {{message.message}}
+    </div>
+  </div>
+  <div>
+    <form>
+        Name:<br>
+        <input type="text" #nameInp><br>
+        Message:<br>
+        <input type="text" #messageInp><br>
+        Created By:<br>
+        <input type="text" #createdbyInp><br>
+    </form>
+    <br/>
+    <button (click)='createMessage(nameInp.value, messageInp.value, createdbyInp.value)'>Add</button>
+  </div>
+</div>

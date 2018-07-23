@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  helloworldapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
