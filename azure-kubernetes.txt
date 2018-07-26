@@ -1,0 +1,37 @@
+#login to your account
+az login
+
+#set azure subscription
+az account set --subscription f657086f-c02c-4de3-ace4-d34d9e69ac92
+
+#create a resource group
+az group create  --resource-group rg-helloworld --location centralus
+
+#register providers for AKS
+az provider register -n Microsoft.ContainerService
+az provider register -n Microsoft.Network
+az provider register -n Microsoft.Compute
+
+#create a 1 node Kubernetes cluster
+az aks create --name cls-helloworld  --resource-group rg-helloworld --node-count 1 --generate-ssh-keys --location centralus --node-vm-size Standard_D1_v2
+
+#get Kubernetes credentials
+az aks get-credentials --resource-group=rg-helloworld --name=cls-helloworld 
+
+#create an Azure storage account for MongoDB
+az storage account create --resource-group MC_rg-helloworld_cls-helloworld_centralus --name helloworldmongodbstorage --location centralus --sku Standard_LRS
+
+#MongoDB should be deployed first.  MongoDB is composed of four Kubernetes resources, a Deployment resource, Service resource, PersistentVolumeClaim resource, and PersistentVolume resource
+kubectl create -f hellowworlddata-persistentvolume.yaml -f hellowworlddata-persistentvolumeclaim.yaml -f mongodb-deployment.yaml -f mongodb-service.yaml
+
+#create the rest of the deployments
+kubectl create -f .\helloworldapi-deployment.yaml -f .\helloworldspa-deployment.yaml 
+kubectl get deployments
+
+#create the rest of the services 
+kubectl create -f .\helloworldapi-service.yaml -f .\helloworldspa-service.yaml -f .\helloworldelements-service.yaml
+kubectl get services
+
+#create a proxy connection to the Kubernetes dashboard
+az aks browse --name cls-helloworld --resource-group rg-helloworld
+

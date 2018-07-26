@@ -1,0 +1,25 @@
+#navigate to code directory
+docker-compose build --no-cache
+
+docker login
+
+#tag the api 
+docker tag helloworldapi shailensukul/shailen:helloworldapi
+
+#publish the api to docker
+docker push shailensukul/shailen:helloworldapi
+
+#edit helloworld.component.ts in /code/helloworldspa/src/app/helloworld and 
+#change the SPA so that it points to the correct API url
+#http://helloworldapiazure (for Azure)
+#http://helloworldapigoogle (for Google)
+#tag the spa for Google
+docker tag helloworldspa shailensukul/shailen:helloworldspagoogle
+
+#tag the spa for Azure
+docker tag helloworldspa shailensukul/shailen:helloworldspaazure
+
+#push the spa to docker
+docker push shailensukul/shailen:helloworldspagoogle
+docker push shailensukul/shailen:helloworldspaazure
+

@@ -1,0 +1,20 @@
+#one timeonly
+gcloud init
+
+#set to the helloworld project
+gcloud config set project helloworld-201807 
+
+#set the zone
+gcloud config set compute/zone us-central-1-a
+
+#create cluster
+gcloud container clusters create "helloworld-cluster" --zone us-central1-a --node-locations us-central1-a --num-nodes=1 --machine-type n1-standard-2
+
+#get cluster credentails
+gcloud container clusters get-credentials helloworld-cluster --zone us-central1-a --project helloworld-201807
+
+#manage cluster
+gcloud container clusters get-credentials helloworld-cluster --zone us-central1-a --project helloworld-201807
+
+#go to the control plane
+kubectl proxy
