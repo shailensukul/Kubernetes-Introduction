@@ -1,0 +1,2 @@
+#install kompose from here
+kompose convert -f docker-compose.yml

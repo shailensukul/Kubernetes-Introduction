@@ -1,3 +1,12 @@
+#install docker
+https://docs.docker.com/docker-for-windows/install/
+
+#install cloud cli
+https://cloud.google.com/sdk/docs/#install_the_latest_cloud_tools_version_cloudsdk_current_version
+
+#visual control plane
+#https://cloud.google.com/kubernetes-engine/
+
 #one timeonly
 gcloud init
 
@@ -8,7 +17,7 @@ gcloud config set project helloworld-201807
 gcloud config set compute/zone us-central-1-a
 
 #create cluster
-gcloud container clusters create "helloworld-cluster" --zone us-central1-a --node-locations us-central1-a --num-nodes=1 --machine-type n1-standard-2
+gcloud container clusters create "helloworld-cluster" --zone us-central1-a --node-locations us-central1-a --num-nodes=3 --machine-type n1-standard-2
 
 #get cluster credentails
 gcloud container clusters get-credentials helloworld-cluster --zone us-central1-a --project helloworld-201807
@@ -18,3 +27,14 @@ gcloud container clusters get-credentials helloworld-cluster --zone us-central1-
 
 #go to the control plane
 kubectl proxy
+
+#MongoDB should be deployed first.  MongoDB is composed of four Kubernetes resources, a Deployment resource, Service resource, PersistentVolumeClaim resource, and PersistentVolume resource
+kubectl create -f hellowworlddata-persistentvolume.yaml -f hellowworlddata-persistentvolumeclaim.yaml -f mongodb-deployment.yaml -f mongodb-service.yaml
+
+#create the rest of the deployments
+kubectl create -f .\helloworldapi-deployment.yaml -f .\helloworldspa-deployment.yaml 
+kubectl get deployments
+
+#create the rest of the services 
+kubectl create -f .\helloworldapi-service.yaml -f .\helloworldspa-service.yaml 
+kubectl get services

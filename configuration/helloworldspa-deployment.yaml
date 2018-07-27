@@ -26,8 +26,8 @@ spec:
         env:
         - name: NODE_ENV
           value: production
-        #image: shailensukul/shailen:helloworldspagoogle
-        image: shailensukul/shailen:helloworldspaazure
+        image: shailensukul/shailen:helloworldspagoogle
+        #image: shailensukul/shailen:helloworldspaazure
         name: helloworldspa
         ports:
         - containerPort: 80

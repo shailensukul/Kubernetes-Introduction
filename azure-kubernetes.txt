@@ -1,3 +1,9 @@
+#install azure cli
+https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
+
+#install docker
+https://docs.docker.com/docker-for-windows/install/
+
 #login to your account
 az login
 
