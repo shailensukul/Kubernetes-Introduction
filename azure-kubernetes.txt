@@ -29,9 +29,14 @@ kubectl create -f .\helloworldapi-deployment.yaml -f .\helloworldspa-deployment.
 kubectl get deployments
 
 #create the rest of the services 
-kubectl create -f .\helloworldapi-service.yaml -f .\helloworldspa-service.yaml -f .\helloworldelements-service.yaml
+kubectl create -f .\helloworldapi-service.yaml -f .\helloworldspa-service.yaml 
 kubectl get services
 
 #create a proxy connection to the Kubernetes dashboard
 az aks browse --name cls-helloworld --resource-group rg-helloworld
 
+#kubectl proxy
+
+#create the following DNS entries:
+helloworldazure.shailensukul.com >> public IP for SPA
+helloworldapiazure.shailensukul.com >> public IP for API

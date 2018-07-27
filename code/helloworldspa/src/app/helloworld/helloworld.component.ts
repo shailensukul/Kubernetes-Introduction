@@ -10,8 +10,7 @@ export class HelloworldComponent implements OnInit {
 
   messages: any;
   //url = "http://helloworldapiazure.shailensukul.com/api/mongodb";
-  //url = "http://helloworldapigoogle.shailensukul.com/api/mongodb";
-  //url = "http://35.184.65.25/api/mongodb";
+  url = "http://helloworldapigoogle.shailensukul.com/api/mongodb";
   //url = "http://localhost:8082/api/mongodb";
   headers = new HttpHeaders(
     {
