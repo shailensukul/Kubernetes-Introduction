@@ -27,6 +27,7 @@ az aks get-credentials --resource-group=rg-helloworld --name=cls-helloworld
 #create an Azure storage account for MongoDB
 az storage account create --resource-group MC_rg-helloworld_cls-helloworld_centralus --name helloworldmongodbstorage --location centralus --sku Standard_LRS
 
+#Get kubectl from here : https://kubernetes.io/docs/tasks/tools/install-kubectl/
 #MongoDB should be deployed first.  MongoDB is composed of four Kubernetes resources, a Deployment resource, Service resource, PersistentVolumeClaim resource, and PersistentVolume resource
 kubectl create -f hellowworlddata-persistentvolume.yaml -f hellowworlddata-persistentvolumeclaim.yaml -f mongodb-deployment.yaml -f mongodb-service.yaml
 

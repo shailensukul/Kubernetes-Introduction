@@ -1,2 +1,2 @@
-#install kompose from here
+#install kompose from here https://github.com/kubernetes/kompose
 kompose convert -f docker-compose.yml
